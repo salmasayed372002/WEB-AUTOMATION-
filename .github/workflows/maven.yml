@@ -1,0 +1,85 @@
+name: Automation Exercise Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  selenium-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # Adjust as necessary
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK 17 and Maven
+      - name: Set up JDK 17 and Maven
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk maven
+          java -version
+          mvn -v
+
+      # Step 3: Install necessary browser dependencies for Selenium
+      - name: Install Browser Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev build-essential xvfb
+          sudo apt-get install -y libcurl3-gnutls libnspr4 libnss3 xdg-utils fonts-liberation libasound2-dev
+          sudo apt-get install -y libdbus-1-3 libx11-xcb1 libxkbcommon0
+          
+          # Install Google Chrome
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
+          sudo apt-get install -y google-chrome-stable
+          
+          # Install Fluxbox and Xvfb for headless operation
+          sudo apt-get install -y fluxbox x11-utils
+
+      # Step 4: Set up Virtual Display
+      - name: Set up Xvfb Virtual Display
+        run: |
+          # Ensure any existing Xvfb process is stopped
+          killall Xvfb || true
+          rm -f /tmp/.X99-lock
+
+          # Start a new Xvfb instance
+          Xvfb :99 -screen 0 1280x1024x24 &
+
+          # Set the DISPLAY environment variable
+          export DISPLAY=:99
+          echo "DISPLAY is set to $DISPLAY"
+
+      # Step 5: Build and run tests using Maven
+      - name: Run Maven Build and Tests
+        run: |
+          export DISPLAY=:99
+          mvn clean test -Djava.awt.headless=false
+
+      # Step 7: Commit and push HTML report (if reports are generated in HTML)
+#      - name: Commit and push HTML report
+#        run: |
+#          git config --global user.name "Shady19977"
+#          git config --global user.email "shadyahmedmohamed97@gmail.com"
+#          git remote remove origin
+#          git remote add origin https://shady19977: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@github.com/shady19977/DEPI-Awesome.git
+#
+#          # Add only the HTML reports if necessary
+#          git add index.html
+#          git commit -m "Update Selenium test report"
+#
+#          # Set the default pull behavior to rebase
+#          git config pull.rebase true
+#
+#          # Pull with rebase and set conflict resolution strategy
+#          git pull --rebase=merges origin master
+#          git push origin master
+#
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

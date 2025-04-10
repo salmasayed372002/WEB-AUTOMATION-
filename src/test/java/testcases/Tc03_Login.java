@@ -14,7 +14,7 @@ public class Tc03_Login extends TestBase
     @Test(priority = 1, description = "Login with valid email & password", dependsOnGroups = {"step1"}, groups = {"step2"})
     public void loginWithValidData()
     {
-        String email = (Tc02_Register.email == null) ? "mostafamahmoudaboads@gmail.com" : Tc02_Register.email;
+        String email = (Tc02_Register.email == null) ? "depitestemail99@gmail.com" : Tc02_Register.email;
         String password = (Tc02_Register.password == null) ? "AB123456" : Tc02_Register.password;
         loginPage = new P03_LoginPage(driver);
         loginPage.login(email, password);
@@ -25,7 +25,7 @@ public class Tc03_Login extends TestBase
     @Test(priority = 1, description = "Login with valid Email & invalid password")
     public void loginWithValidEmailAndInvalidPassword()
     {
-        String email = (Tc02_Register.email == null) ? "mostafamahmoudaboads@gmail.com" : Tc02_Register.email;
+        String email = (Tc02_Register.email == null) ? "depitestemail99@gmail.com" : Tc02_Register.email;
         String password = "123";
         loginPage = new P03_LoginPage(driver);
         loginPage.login(email, password);

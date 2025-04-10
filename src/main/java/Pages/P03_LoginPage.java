@@ -11,7 +11,7 @@ public class P03_LoginPage
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(id = "input-email")
+    @FindBy(id = "input-email") // driver.findElement(By.id());
     WebElement email;
 
     @FindBy(id = "input-password")

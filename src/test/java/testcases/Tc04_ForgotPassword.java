@@ -11,7 +11,7 @@ public class Tc04_ForgotPassword extends TestBase {
     public void forgotPasswordWithValidData()
     {
         forgotPasswordPage = new P04_ForgotPasswordPage(driver);
-        forgotPasswordPage.forgotPassword("mostafamahmoudaboads@gmail.com");
+        forgotPasswordPage.forgotPassword("depitestemail99@gmail.com");
         Assert.assertTrue(forgotPasswordPage.getForgotPasswordSuccessText(true));
     }
 
@@ -19,7 +19,7 @@ public class Tc04_ForgotPassword extends TestBase {
     public void forgotPasswordWithInvalidData()
     {
         forgotPasswordPage = new P04_ForgotPasswordPage(driver);
-        forgotPasswordPage.forgotPassword("mostafamahmoudads32323@mail.com");
+        forgotPasswordPage.forgotPassword("depitestemail99@mail.com");
         Assert.assertTrue(forgotPasswordPage.getForgotPasswordSuccessText(false));
     }
 

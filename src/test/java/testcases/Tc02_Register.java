@@ -10,7 +10,7 @@ public class Tc02_Register extends TestBase {
 
     static String email;
     static String password;
-    static String invalidEmail = "mostafamahmoud32323";
+    static String invalidEmail = "depiinvalidemail";
     P02_RegisterPage registerPage;
     Faker faker;
 
